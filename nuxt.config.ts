@@ -9,10 +9,19 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-
   modules: [
     '@nuxt/image',
-    '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@sidebase/nuxt-auth',
   ],
+  auth: {
+    isEnabled: false,
+    disableServerSideAuth: false,
+    originEnvKey: 'AUTH_ORIGIN',
+    baseURL: 'http://localhost:3000/api/auth',
+    provider: { /* your provider config */ },
+    sessionRefresh: {
+      enablePeriodically: true,
+      enableOnWindowFocus: true,
+    }
+  },
 })

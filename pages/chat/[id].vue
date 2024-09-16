@@ -23,7 +23,7 @@
                 allMessages: []
             }
         },
-        methods () {
+        methods: {
             async sendMessage() {
                 if (!this.userInput.trim()) return
             }
