@@ -1,17 +1,5 @@
-<script lang="ts">
-import { buttonVariants } from '@/components/Button';
-
-export default {
-  setup() {
-    const primaryButton = buttonVariants({ variant: 'default', size: 'default' });
-    const ghostButton = buttonVariants({ variant: 'ghost', size: 'default' });
-
-    return {
-      primaryButton,
-      ghostButton
-    };
-  }
-}
+<script setup lang="ts">
+import { buttonVariants } from '../components/ui/button';
 </script>
 
 <template>
@@ -28,10 +16,10 @@ export default {
     <div class="flex-1 flex items-center gap-4 justify-end">
       <NuxtLink 
       to="/login" 
-      :class="ghostButton">Sign in</NuxtLink>
+      :class="buttonVariants({variant: 'ghost'})">Sign in</NuxtLink>
       <NuxtLink 
       to="/login"
-      :class="primaryButton"
+      :class="buttonVariants({})"
       >
          Sign in
        

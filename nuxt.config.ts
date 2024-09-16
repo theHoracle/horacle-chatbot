@@ -12,16 +12,30 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@sidebase/nuxt-auth',
+    'shadcn-nuxt',
+    '@nuxtjs/tailwindcss'
   ],
-  auth: {
-    isEnabled: false,
-    disableServerSideAuth: false,
-    originEnvKey: 'AUTH_ORIGIN',
-    baseURL: 'http://localhost:3000/api/auth',
-    provider: { /* your provider config */ },
-    sessionRefresh: {
-      enablePeriodically: true,
-      enableOnWindowFocus: true,
-    }
+  runtimeConfig: {
+    authSecret: 'NUXT_AUTH_SECERET'
   },
+  auth: {
+    provider: {
+      type: 'authjs',
+      trustHost: false,
+      defaultProvider: 'google',
+      addDefaultCallbackUrl: true
+    },
+    globalAppMiddleware: false,
+  },
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './components/ui'
+  }
 })
