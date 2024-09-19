@@ -3,7 +3,7 @@ import {Card, CardHeader, CardDescription, CardTitle, CardContent} from "@/compo
 import {Button} from '@/components/ui/button';
 
 definePageMeta({
-    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
+    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/chat' }
 })
 
 const {signIn, status} = useAuth()

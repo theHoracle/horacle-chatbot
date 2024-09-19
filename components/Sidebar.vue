@@ -26,7 +26,7 @@ import {PanelRight, CirclePlus, Share} from "lucide-vue-next"</script>
       </div>
 
       <div class="flex flex-col w-full">
-        <div class="h-16 py-2 px-4 bg-gray-300 flex items-center justify-between">
+        <div class="h-16 py-2 px-4 flex items-center justify-between">
             <div class="flex items-center">
             <button @click="toggleSidebar" class="text-muted-foreground rounded-md mr-4">
          <PanelRight />
@@ -43,7 +43,7 @@ import {PanelRight, CirclePlus, Share} from "lucide-vue-next"</script>
                 <div class="aspect-square rounded-full px-2 bg-accent-foreground text-white flex items-center justify-center">PR</div>
             </div>
         </div>
-        <div class="bg-red-500 h-full transition-all duration-300" :class="isOpen ? 'ml-64' : 'ml-0'">
+        <div class="h-full transition-all duration-300" :class="isOpen ? 'ml-64' : 'ml-0'">
         <slot />
         </div>
       </div>

@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css' , '~/assets/css/tailwind.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -13,10 +13,15 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@sidebase/nuxt-auth',
     'shadcn-nuxt',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/harlem'
   ],
   runtimeConfig: {
-    authSecret: 'NUXT_AUTH_SECERET'
+    authSecret: process.env.NUXT_AUTH_SECERET,
+    googleClientId: process.env.NUXT_GOOGLE_CLIENT_ID,
+    googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET,
+    geminiApiKey: process.env.GEMINI_API_KEY
   },
   auth: {
     provider: {
@@ -25,7 +30,7 @@ export default defineNuxtConfig({
       defaultProvider: 'google',
       addDefaultCallbackUrl: true
     },
-    globalAppMiddleware: false,
+    globalAppMiddleware: true,
   },
   shadcn: {
     /**

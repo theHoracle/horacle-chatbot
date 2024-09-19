@@ -24,6 +24,7 @@ import { buttonVariants } from '../components/ui/button';
          Sign in
        
       </NuxtLink>
+      <ThemeToggle />
     </div>
   </nav>
 </template>
