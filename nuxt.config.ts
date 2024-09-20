@@ -1,8 +1,7 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css' , '~/assets/css/tailwind.css'],
+  css: ['~/assets/css/main.css', '~/assets/css/tailwind.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -15,8 +14,24 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
-    '@nuxtjs/harlem'
+    '@nuxtjs/harlem',
+    '@nuxt/ui',
+    '@nuxthub/core'
   ],
+  tailwindcss: {
+    exposeConfig: true,
+    config: {
+      content: [
+        './components/**/*.{js,vue,ts}',
+        './layouts/**/*.vue',
+        './pages/**/*.vue',
+        './plugins/**/*.{js,ts}',
+        './nuxt.config.{js,ts}',
+        './app.vue',
+        './node_modules/@nuxt/ui/dist/**/*.{js,vue,ts}'
+      ],
+    }
+  },
   runtimeConfig: {
     authSecret: process.env.NUXT_AUTH_SECERET,
     googleClientId: process.env.NUXT_GOOGLE_CLIENT_ID,
@@ -33,14 +48,16 @@ export default defineNuxtConfig({
     globalAppMiddleware: true,
   },
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: '',
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
     componentDir: './components/ui'
+  },
+  colorMode: {
+    classSuffix: ''
+  },
+  ui: {
+    global: true,
+  },
+  hub: {
+    database: true,
   }
 })

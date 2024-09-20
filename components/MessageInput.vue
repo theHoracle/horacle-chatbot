@@ -2,13 +2,35 @@
 import { ArrowUpFromDot } from 'lucide-vue-next';
 import { ref, watch } from 'vue';
 
-// Define message as a reactive reference
-const message = ref('');
+// Define props to receive message and handle message send
+const props = defineProps({
+  initialMessage: {
+    type: String,
+    default: ''
+  }
+});
+const emit = defineEmits(['sendMessage']);
+
+// Define message as a reactive reference, initialized with the prop value
+const message = ref(props.initialMessage);
 
 // Watch for changes in message and log it to the console
 watch(message, (newMessage) => {
-    console.log('message is: ', newMessage);
+  console.log('message is: ', newMessage);
 });
+
+// Method to emit the message when the button is clicked
+const sendMessage = () => {
+  if (message.value.trim()) {
+    emit('sendMessage', message.value);
+    message.value = ''; // Clear the message after sending
+  }
+};
+const handleKeyPress = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    sendMessage();
+  }
+};
 </script>
 
 <template>
@@ -16,13 +38,15 @@ watch(message, (newMessage) => {
         <input 
             type="text"
             v-model="message"
-            class="absolute inset-y-4 inset-x-10 bg-transparent outline-none text-white" 
+            @keydown.enter="sendMessage"
+            class="absolute inset-y-4 inset-x-10 bg-transparent outline-none text-white placeholder:text-gray-300 border-0 focus:outline-none focus:ring-0" 
             placeholder="Send a message to HoracleAi, get your dream interview..." 
         />
         <button
+            @click="sendMessage"
             :class="`${message ? 'bg-red-500' : 'bg-gray-400'} transition rounded-full h-9 my-auto flex items-center justify-center aspect-square`"
         >
-            <ArrowUpFromDot class="text-background" />
+            <ArrowUpFromDot  class="text-background" />
         </button>
     </div>
 </template>

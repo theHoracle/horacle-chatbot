@@ -3,9 +3,11 @@ import { createStore } from "harlem";
 // Define the initial state of the chat store
 const STATE = {
     messages: [] as Array<{ sender: 'user' | 'bot'; content: string }>,
+    score: 0,
+    gameOver: false,
     isLoading: false, // To show loading state when waiting for a bot response
   };
-  
+export type TgameState = typeof state 
 
 // Create the store with an initial state
 export const {
@@ -34,7 +36,7 @@ export const sendMessage = async (message: string) => {
 
     try {
 
-        const response = await fetch('/api/gemini', {
+        const response = await fetch('/api/horacle', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,7 +46,7 @@ export const sendMessage = async (message: string) => {
 
         console.log(response)
         const data = await response.json();
-        addMessage('bot', data.response);
+        addMessage('bot', data?.response);
     } catch (error) {
         console.error('Error sending message:', error);
     } finally {

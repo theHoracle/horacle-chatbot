@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { sendMessage, state} from "@/store/chat"
+import { sendMessage, state} from "@/store/game"
 
-const userMessage = ref('')
-const chat = computed(() => state.messages)
-const handleText = () => {
-    if(userMessage.value.trim()) {
-        sendMessage(userMessage.value)
-        console.log("Sent")
-    }
-}
-console.log("state: ",state)
+const allMessages = ref([
+  { content: "Welcome to Football Trivia! Are you ready to test your knowledge?", isBot: true, score: 0, isAnimating: true },
+])
 </script>
 
 <template>
@@ -19,8 +13,8 @@ console.log("state: ",state)
             <Sidebar>
                 <div class="">
                     <div class="relative w-4/5 mx-auto h-[calc(100lvh-64px)]">
+                        <FootballTriviaChat :gameState="state" @sendMessage="sendMessage" />
                         <div class="absolute bottom-0 inset-x-0 flex flex-col items-center justify-center gap-1">
-                            <MessageInput />
                             <div class="p-1 text-xs">
                                 Horacle AI can make mistakes too. Verify important info.
                             </div>
