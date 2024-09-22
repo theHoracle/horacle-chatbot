@@ -36,7 +36,8 @@ export default defineNuxtConfig({
     authSecret: process.env.NUXT_AUTH_SECERET,
     googleClientId: process.env.NUXT_GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET,
-    geminiApiKey: process.env.GEMINI_API_KEY
+    geminiApiKey: process.env.GEMINI_API_KEY,
+    DB: {}
   },
   auth: {
     provider: {
@@ -59,5 +60,11 @@ export default defineNuxtConfig({
   },
   hub: {
     database: true,
-  }
+  },
+  nitro: {
+    experimental: {
+      wasm: true
+    },
+  },
+  
 })

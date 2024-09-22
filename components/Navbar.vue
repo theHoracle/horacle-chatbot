@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { buttonVariants } from '../components/ui/button';
+
+const { status, data, signOut, signIn } = useAuth()
+
 </script>
 
 <template>
@@ -10,21 +13,42 @@ import { buttonVariants } from '../components/ui/button';
         <li>Home</li>
         <li>About</li>
         <li>More</li>
-        <li>Try Horacle Ai</li>
+        <li>theHoracle</li>
       </ul>
     </div>
-    <div class="flex-1 flex items-center gap-4 justify-end">
-      <NuxtLink 
-      to="/login" 
-      :class="buttonVariants({variant: 'ghost'})">Sign in</NuxtLink>
-      <NuxtLink 
-      to="/login"
-      :class="buttonVariants({})"
+    <div v-if="status === 'unauthenticated'" class="flex-1 flex items-center gap-4 justify-end">
+      <Button
+      @click="signIn"
       >
-         Sign in
-       
-      </NuxtLink>
+         Login  
+      </Button>
       <ThemeToggle />
+    </div>
+    <div v-if="status === 'authenticated'"
+    class="flex-1 justify-end flex items-center gap-4"
+    >
+    <ThemeToggle />
+      
+        
+        <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <button>
+        <div v-if="data?.user" class="bg-primary rounded-full relative overflow-hidden w-10 aspect-square">
+        <NuxtImg 
+        v-if="data.user.image" 
+        :src="data?.user.image" 
+        class="object-cover object-center"
+        />
+        <span class="sr-only">Profile</span>
+        </div>
+      </button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent align="end">
+      <DropdownMenuItem @click="signOut">
+        Logout
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
     </div>
   </nav>
 </template>

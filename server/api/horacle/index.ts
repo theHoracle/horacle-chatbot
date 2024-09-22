@@ -1,8 +1,17 @@
 // server/api/gemini/index.ts
 
+import { getServerSession } from '#auth';
 import { geminiModel } from '~/server/utils/gemini';
 
 export default defineEventHandler(async (event) => {
+
+  const session = await getServerSession(event)
+  if(!session) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized'
+    });
+  }
   // Only allow POST requests
   if (event.node.req.method !== 'POST') {
     throw createError({

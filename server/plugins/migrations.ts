@@ -7,6 +7,8 @@ export default defineNitroPlugin(async() => {
         return
     }
     onHubReady(async () => {
+        consola.info('NuxtHub bindings are ready!')
+          
         // migrate the database
         await migrate(useDrizzle(), {
             migrationsFolder: 'server/database/migrations',
