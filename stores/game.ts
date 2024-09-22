@@ -26,7 +26,7 @@ export const useGameStore = defineStore('activeGame', () => {
     const startNewGame = async (data: ChatMessage ) => {
         const id = createId()
         setGameId(id)
-        console.log(gameId.value)
+        console.log('gameId: ',gameId.value)
         game.value.messages.push(data)
         console.log('gamechat: ', game)
         try {
