@@ -6,4 +6,4 @@ const { geminiApiKey } = useRuntimeConfig();
 const genAI = new GoogleGenerativeAI(geminiApiKey);
 
 // Create and export the model
-export const geminiModel = genAI.getGenerativeModel({ model: "gemini-pro" });
+export const geminiModel = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });

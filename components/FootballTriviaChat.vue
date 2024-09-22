@@ -5,9 +5,9 @@
       <template v-for="(message, index) in gameState.messages" :key="index">
         <div :class="[
           'max-w-[80%] p-3 rounded-lg',
-          message.sender === 'bot' ? 'bg-gray-200 self-start' : 'bg-primary w-fit text-white self-end ml-auto'
+          message.role === 'model' ? 'bg-gray-200 self-start' : 'bg-primary w-fit text-white self-end ml-auto'
         ]">
-          <div v-if="message.sender === 'bot'">
+          <div v-if="message.role === 'model'">
             <!-- Typing Animation only for the last message -->
             <div v-if="index === gameState.messages.length - 1 && gameState.isLoading" class="typing-animation">
               <span></span>
@@ -47,11 +47,10 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
 import MessageInput from './MessageInput.vue';
-import type { TgameState } from '@/store/game';
+import { useGameStore } from '~/stores/game';
 
-const { gameState } = defineProps<{
-  gameState: TgameState;
-}>();
+const { game, newGame } = useGameStore()
+const gameState = game
 
 const emit = defineEmits(['sendMessage']);
 const chatContainer = ref(null);
@@ -60,8 +59,12 @@ const formatBotMessage = (message: string) => {
   return message.replace(/Next question:/g, '<strong>Next question:</strong>');
 };
 
-const sendMessage = (message: string) => {
+const sendMessage = async (message: string) => {
   if (message.trim()) {
+   await newGame({
+      content: message,
+      role: 'user'
+    })
     emit('sendMessage', message);
   }
 };

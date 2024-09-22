@@ -50,6 +50,7 @@ export default NuxtAuthHandler({
             token.userId = existingUser.id
             token.email = existingUser.email
             token.name = existingUser.name
+            token.username = existingUser.username
           }
         }
         return token
@@ -64,6 +65,7 @@ export default NuxtAuthHandler({
           session.user.id = token.userId as string
           session.user.email = token.email as string
           session.user.name = token.name as string
+          session.user.username = token.username as string
         }
         return session
       } catch (error) {

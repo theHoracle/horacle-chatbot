@@ -16,8 +16,15 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/harlem',
     '@nuxt/ui',
-    '@nuxthub/core'
+    '@nuxthub/core',
+    '@pinia/nuxt',
   ],
+  pinia: {
+    autoImports: ['defineStore'],
+    import: {
+      dirs: ['./stores']
+    }
+  },
   tailwindcss: {
     exposeConfig: true,
     config: {

@@ -7,6 +7,9 @@ const props = defineProps({
   initialMessage: {
     type: String,
     default: ''
+  },
+  handleMessage: {
+    type: Function
   }
 });
 const emit = defineEmits(['sendMessage']);
@@ -26,11 +29,7 @@ const sendMessage = () => {
     message.value = ''; // Clear the message after sending
   }
 };
-const handleKeyPress = (event: KeyboardEvent) => {
-  if (event.key === 'Enter') {
-    sendMessage();
-  }
-};
+
 </script>
 
 <template>
@@ -40,7 +39,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
             v-model="message"
             @keydown.enter="sendMessage"
             class="absolute inset-y-4 inset-x-10 bg-transparent outline-none text-white placeholder:text-gray-300 border-0 focus:outline-none focus:ring-0" 
-            placeholder="Send a message to HoracleAi, get your dream interview..." 
+            placeholder="Reply theHoracle..." 
         />
         <button
             @click="sendMessage"
