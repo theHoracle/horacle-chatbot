@@ -1,7 +1,7 @@
 // server/api/gemini/index.ts
 
 import { getServerSession } from '#auth';
-import { geminiModel } from '~/server/utils/gemini';
+import { geminiModel, generationConfig } from '~/server/utils/gemini';
 
 export default defineEventHandler(async (event) => {
 
@@ -37,9 +37,10 @@ export default defineEventHandler(async (event) => {
     })
     const response = await chatSession.sendMessage(chat);
     const text = response.response.text();
+    const cleanText = text.replace(/```json\n|```/g, "").trim();
 
     // Return the generated text
-    return { modelResponse: text };
+    return { modelResponse: cleanText };
   } catch (error) {
     console.error('Error calling Gemini API:', error);
     throw createError({

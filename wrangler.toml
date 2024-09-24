@@ -1,0 +1,11 @@
+name = "horacle-football-trivia"
+main = "src/index.ts"
+compatibility_date = "2024-09-20"
+node_compat = true
+
+
+[[d1_databases]]
+binding = "DB"
+database_name = "horacle-football-trivia-db"
+database_id = "7b0fdb11-ad1c-416c-bcd0-c7aabf1d55b8"
+migrations_dir = "server/database/migrations"
