@@ -40,6 +40,7 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    authOrigin: process.env.AUTH_ORIGIN,
     authSecret: process.env.NUXT_AUTH_SECERET,
     googleClientId: process.env.NUXT_GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET,

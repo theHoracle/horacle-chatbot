@@ -77,6 +77,4 @@ export default NuxtAuthHandler({
   pages: {
     signOut: '/',
   },
-  // Add debug logs
-  debug: process.env.NODE_ENV === 'development',
 })

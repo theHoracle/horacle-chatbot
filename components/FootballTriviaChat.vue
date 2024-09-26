@@ -38,8 +38,10 @@
     </div>
 
     <!-- Input Section -->
-    <div class="pb-2">
-      <MessageInput @sendMessage="sendMessage" />
+    <div class="pb-2"
+    v-if="!gameState.gameOver"
+    >
+      <MessageInput @messageHandler="messageHandler" />
     </div>
   </div>
 </template>
@@ -49,23 +51,23 @@ import { ref, watch, nextTick } from 'vue';
 import MessageInput from './MessageInput.vue';
 import { useGameStore } from '~/stores/game';
 
-const { game, newGame } = useGameStore()
-const gameState = game
 
-const emit = defineEmits(['sendMessage']);
+const { game,  sendMessage  } = useGameStore()
+const gameState = game
+console.log(gameState)
+
+const emit = defineEmits(['messageHandler']);
 const chatContainer = ref(null);
 
 const formatBotMessage = (message: string) => {
   return message.replace(/Next question:/g, '<strong>Next question:</strong>');
 };
 
-const sendMessage = async (message: string) => {
+const messageHandler = async (message: string) => {
   if (message.trim()) {
-   await newGame({
-      content: message,
-      role: 'user'
-    })
-    emit('sendMessage', message);
+   await sendMessage(message
+      )
+    emit('messageHandler', message);
   }
 };
 

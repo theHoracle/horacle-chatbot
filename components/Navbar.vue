@@ -28,27 +28,7 @@ const { status, data, signOut, signIn } = useAuth()
     class="flex-1 justify-end flex items-center gap-4"
     >
     <ThemeToggle />
-      
-        
-        <DropdownMenu>
-    <DropdownMenuTrigger as-child>
-      <button>
-        <div v-if="data?.user" class="bg-primary rounded-full relative overflow-hidden w-10 aspect-square">
-        <NuxtImg 
-        v-if="data.user.image" 
-        :src="data?.user.image" 
-        class="object-cover object-center"
-        />
-        <span class="sr-only">Profile</span>
-        </div>
-      </button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent align="end">
-      <DropdownMenuItem @click="signOut">
-        Logout
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
+    <UserMenu />
     </div>
   </nav>
 </template>

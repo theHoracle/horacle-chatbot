@@ -39,8 +39,8 @@ import {PanelRight, CirclePlus, Share} from "lucide-vue-next"</script>
             
             </div>
             <div class="flex items-center gap-4">
-                <Share />
-                <div class="aspect-square rounded-full px-2 bg-accent-foreground text-white flex items-center justify-center">PR</div>
+              <ThemeToggle />
+              <UserMenu />
             </div>
         </div>
         <div class="h-full transition-all duration-300" :class="isOpen ? 'ml-64' : 'ml-0'">
