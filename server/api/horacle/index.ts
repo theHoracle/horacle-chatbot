@@ -3,7 +3,8 @@ import { geminiModel } from '~/server/utils/gemini';
 import { useDrizzle } from '~/server/utils/database';
 import { gameMessages, games } from '~/server/database/schema';
 import { getServerSession } from '#auth';
-import { eq } from 'drizzle-orm';
+import { asc, desc, getOrderByOperators } from 'drizzle-orm';
+
 
 export default defineEventHandler(async (event) => {
     const session = await getServerSession(event);
@@ -41,10 +42,12 @@ export default defineEventHandler(async (event) => {
           message: userResponse,
       });
 
-      const chatHistory = await db.select().from(gameMessages)
+      const chatHistory = (await db.select().from(gameMessages)
           .where(eq(gameMessages.gameId, gameId))
-          .orderBy(gameMessages.createdAt)
-          .limit(5);  // Limit context to last 5 messages
+          .orderBy(desc(gameMessages.createdAt))
+          .limit(5)).toReversed()
+            // Limit context to last 5 messages
+          
 
       const chatHistoryArray = [{
             role: 'user',
@@ -70,7 +73,7 @@ export default defineEventHandler(async (event) => {
 
             await db.insert(gameMessages).values({
                 gameId: gameId,
-                role: 'system',
+                role: 'model',
                 message: cleanText,
             })
 

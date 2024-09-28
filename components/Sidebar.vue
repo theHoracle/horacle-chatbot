@@ -31,7 +31,12 @@ import {PanelRight, CirclePlus, Share} from "lucide-vue-next"</script>
             <button @click="toggleSidebar" class="text-muted-foreground rounded-md mr-4">
          <PanelRight />
             </button>
+            <NuxtLink 
+            to="/game"
+            class=""
+            >
             <CirclePlus v-if="!isOpen" />
+            </NuxtLink>
             <span 
             class="transition-all duration-300"
             :class="isOpen ? 'translate-x-56' : 'translate-x-0 ml-4'"

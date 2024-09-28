@@ -1,6 +1,6 @@
 import { getServerSession } from "#auth";
 import { asc } from "drizzle-orm";
-import { gameMessages } from "~/server/database/schema";
+import { gameMessages, games } from "~/server/database/schema";
 
 export default defineEventHandler(async (event) => {
     const gameId = getRouterParam(event, 'gameId')
@@ -30,16 +30,38 @@ export default defineEventHandler(async (event) => {
         if(!db) {
             throw new Error("DB Bindnigs not here")
         }
-        const [currentGame] = await db.select().from(gameMessages)
-        .where(eq(gameMessages.gameId, gameId))
-        .orderBy(asc(gameMessages.createdAt))
-        if(!currentGame) {
-            return createError({
-                statusCode: 404,
-                statusMessage: "GAME NOT FOUND!"
-            })
-        }
-        return { currentGame }
+
+        const result = await db.select({
+            game: {
+              id: games.id,
+              userId: games.userId,
+              score: games.score,
+              gameOver: games.gameOver,
+            },
+            messages: {
+              id: gameMessages.id,
+              role: gameMessages.role,
+              message: gameMessages.message,
+              createdAt: gameMessages.createdAt,
+            },
+          })
+          .from(games)
+          .leftJoin(gameMessages, eq(games.id, gameMessages.gameId))
+          .where(eq(games.id, gameId));
+        
+        const gameWithMessages = result.reduce((acc, row) => {
+            if (!acc.game) {
+              acc.game = row.game;
+              acc.game.messages = [];
+            }
+            if (row?.messages?.id) {
+              acc.game.messages.push(row.messages);
+            }
+            return acc;
+          }, 
+          { game: null as any });
+        console.log(gameWithMessages)
+        return { gameWithMessages }
     } catch (error) {
         console.error('Error getting content from server (game-chat):', error);
         throw createError({

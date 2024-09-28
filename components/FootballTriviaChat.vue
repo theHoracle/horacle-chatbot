@@ -11,7 +11,7 @@
             <!-- Typing Animation only for the last message -->
             <div v-if="index === gameState.messages.length - 1 && gameState.isLoading" class="typing-animation">
               <span></span>
-              <span></span>
+              <span></span> 
               <span></span>
             </div>
             <div v-else>
@@ -52,9 +52,10 @@ import MessageInput from './MessageInput.vue';
 import { useGameStore } from '~/stores/game';
 
 
-const { game,  sendMessage  } = useGameStore()
-const gameState = game
-console.log(gameState)
+const { game,  sendMessage } = useGameStore()
+
+const gameState = computed(() => game)
+console.log("SOmething change :", gameState.value)
 
 const emit = defineEmits(['messageHandler']);
 const chatContainer = ref(null);
@@ -79,7 +80,7 @@ const scrollToBottom = () => {
 };
 
 // Scroll to the bottom when new messages are added
-watch(() => gameState.messages, () => {
+watch(() => gameState.value.messages, () => {
   nextTick(() => {
     scrollToBottom();
   });

@@ -3,16 +3,22 @@ const route = useRoute()
 const router = useRouter()
 const gameId = route.params.gameId
 
-const { hasActiveGame, initializeGame } = useGameStore()
-
+const { hasActiveGame, initializeGame, game } = useGameStore()
+const isActiveGame = ref(hasActiveGame)
 onMounted(async () => {
-  if (typeof gameId === 'string' && hasActiveGame) {
+  if (typeof gameId === 'string' && isActiveGame.value) {
     return 
-} else if(typeof gameId === 'string' && !hasActiveGame) {
-      await initializeGame(gameId);
+} else if(typeof gameId === 'string' && !isActiveGame.value) {
+    try {
+        await initializeGame(gameId);
+        console.log(game)
+        console.log("Game initialized!")
+    } catch (error) {
+        router.push('/game')
+    }
 } else {
     // Redirect to the main game page if there's no active game 0r sum
-    router.push('/game');
+    router.push('/');
 }
 });
 

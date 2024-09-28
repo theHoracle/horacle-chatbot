@@ -86,9 +86,21 @@ export const useGameStore = defineStore('activeGame', () => {
     const fetchGameState = async (id: string) => {
         game.value.isLoading = true;
         try {
-            const response = await $fetch(`/api/horacle/${id}`, { method: 'GET' });
-            setGameId(id);
-            setGame(response);
+            const response = await $fetch(`/api/horacle/get-game/${id}`, { method: 'GET' });
+            if(response) {
+                setGameId(id);
+                const gameState = ((response as unknown as any).gameWithMessages?.game)
+                setGame({
+                    gameOver: gameState?.gameOver,
+                    messages: gameState?.messages.map((message: ChatMessage) => ({
+                        role: message.role,
+                        content: message.content,
+                    })),
+                    score: gameState?.score,
+                });
+                return;
+            }
+            throw new Error("GAME NOT FOUND");
         } catch (error) {
             console.error('Error fetching game state:', error);
             throw error;

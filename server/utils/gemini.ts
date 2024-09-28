@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(geminiApiKey);
 
 // Create and export the model
 export const geminiModel = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
+    model: "gemini-1.5-pro",
  });
 
 export const generationConfig = {
